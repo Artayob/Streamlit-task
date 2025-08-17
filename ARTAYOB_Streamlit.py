@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import ast
 import sys
 
@@ -48,20 +47,15 @@ st.subheader("📊 Visual Insights")
 col1, col2 = st.columns(2)
 
 with col1:
-    fig1, ax1 = plt.subplots()
-    ax1.scatter(filtered_df['budget'], filtered_df['revenue'], alpha=0.6, color='teal')
-    ax1.set_title("💰 Budget vs Revenue")
-    ax1.set_xlabel("Budget")
-    ax1.set_ylabel("Revenue")
-    st.pyplot(fig1)
+    st.markdown("**💰 Budget vs Revenue**")
+    chart_data = filtered_df[['budget', 'revenue']].dropna()
+    st.line_chart(chart_data)
 
 with col2:
-    fig2, ax2 = plt.subplots()
-    ax2.hist(filtered_df['vote_average'].dropna(), bins=20, color='orange', edgecolor='black')
-    ax2.set_title("⭐ Rating Distribution")
-    ax2.set_xlabel("Vote Average")
-    ax2.set_ylabel("Count")
-    st.pyplot(fig2)
+    st.markdown("**⭐ Rating Distribution**")
+    rating_counts = filtered_df['vote_average'].value_counts().sort_index()
+    rating_df = pd.DataFrame({'vote_average': rating_counts.index, 'count': rating_counts.values})
+    st.bar_chart(rating_df.set_index('vote_average'))
 
 # Show Python executable path
 st.write(sys.executable)
