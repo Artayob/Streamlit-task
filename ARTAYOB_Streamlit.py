@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
 import ast
+import sys
 
 st.set_page_config(layout="wide")
 st.title("TMDB Movies Dashboard")
@@ -47,22 +48,20 @@ st.subheader("📊 Visual Insights")
 col1, col2 = st.columns(2)
 
 with col1:
-    fig1 = px.scatter(
-        filtered_df,
-        x='budget',
-        y='revenue',
-        hover_name='title',
-        title="💰 Budget vs Revenue"
-    )
-    st.plotly_chart(fig1, use_container_width=True)
+    fig1, ax1 = plt.subplots()
+    ax1.scatter(filtered_df['budget'], filtered_df['revenue'], alpha=0.6, color='teal')
+    ax1.set_title("💰 Budget vs Revenue")
+    ax1.set_xlabel("Budget")
+    ax1.set_ylabel("Revenue")
+    st.pyplot(fig1)
 
 with col2:
-    fig2 = px.histogram(
-        filtered_df,
-        x='vote_average',
-        nbins=20,
-        title="⭐ Rating Distribution"
-    )
-    st.plotly_chart(fig2, use_container_width=True)
-import sys
+    fig2, ax2 = plt.subplots()
+    ax2.hist(filtered_df['vote_average'].dropna(), bins=20, color='orange', edgecolor='black')
+    ax2.set_title("⭐ Rating Distribution")
+    ax2.set_xlabel("Vote Average")
+    ax2.set_ylabel("Count")
+    st.pyplot(fig2)
+
+# Show Python executable path
 st.write(sys.executable)
