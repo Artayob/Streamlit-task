@@ -6,13 +6,16 @@ import sys
 st.set_page_config(layout="wide")
 st.title("TMDB Movies Dashboard")
 
-# Load data
-uploaded_file = st.file_uploader("Upload TMDB CSV file", type="csv")
+# Load data from local CSV
+df = None
+try:
+    df = pd.read_csv("C:/Users/sakit/Desktop/Streamlit task/archive/tmdb_5000_movies.csv")
+except FileNotFoundError:
+    st.error("CSV file not found. Please make sure 'tmdb_5000_movies.csv' is in the same folder as this script.")
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+# ✅ Only proceed if df was successfully loaded
+if df is not None:
 
-    # Preprocess genres column
     def extract_genres(genre_str):
         try:
             genres = ast.literal_eval(genre_str)
@@ -59,9 +62,6 @@ if uploaded_file is not None:
         rating_counts = filtered_df['vote_average'].value_counts().sort_index()
         rating_df = pd.DataFrame({'vote_average': rating_counts.index, 'count': rating_counts.values})
         st.bar_chart(rating_df.set_index('vote_average'))
-
-else:
-    st.warning("Please upload the TMDB CSV file to proceed.")
 
 # Show Python executable path
 st.write(sys.executable)
