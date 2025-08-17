@@ -64,3 +64,5 @@ with col2:
         title="⭐ Rating Distribution"
     )
     st.plotly_chart(fig2, use_container_width=True)
+import sys
+st.write(sys.executable)
