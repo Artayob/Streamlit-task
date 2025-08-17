@@ -7,7 +7,12 @@ st.set_page_config(layout="wide")
 st.title("TMDB Movies Dashboard")
 
 # Load data
-df = pd.read_csv("C:/Users/sakit/Desktop/Streamlit task/archive/tmdb_5000_movies.csv")
+uploaded_file = st.file_uploader("C:/Users/sakit/Desktop/Streamlit task/archive/tmdb_5000_movies.csv", type="csv")
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+else:
+    st.warning("Please upload the TMDB CSV file to proceed.")
 
 # Preprocess genres column
 def extract_genres(genre_str):
