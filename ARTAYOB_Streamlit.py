@@ -13,7 +13,6 @@ try:
 except FileNotFoundError:
     st.error("CSV file not found. Please make sure 'tmdb_5000_movies.csv' is in the same folder as this script.")
 
-# ✅ Only proceed if df was successfully loaded
 if df is not None:
 
     def extract_genres(genre_str):
@@ -63,5 +62,4 @@ if df is not None:
         rating_df = pd.DataFrame({'vote_average': rating_counts.index, 'count': rating_counts.values})
         st.bar_chart(rating_df.set_index('vote_average'))
 
-# Show Python executable path
 st.write(sys.executable)
