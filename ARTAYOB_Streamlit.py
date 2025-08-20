@@ -9,7 +9,7 @@ st.title("TMDB Movies Dashboard")
 # Load data from local CSV
 df = None
 try:
-    df = pd.read_csv("C:/Users/sakit/Desktop/Streamlit task/archive/tmdb_5000_movies.csv")
+    df = pd.read_csv("C:/Users/sakit/Desktop/Streamlit task/tmdb_5000_movies.csv")
 except FileNotFoundError:
     st.error("CSV file not found. Please make sure 'tmdb_5000_movies.csv' is in the same folder as this script.")
 
