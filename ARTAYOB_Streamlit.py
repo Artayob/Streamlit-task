@@ -42,7 +42,6 @@ if df is not None:
             filtered_df['genres_list'].apply(lambda x: any(g in x for g in selected_genres))
         ]
 
-    # Show filtered data
     st.subheader("🎬 Filtered Movies")
     st.dataframe(filtered_df[['title', 'release_year', 'vote_average', 'budget', 'revenue']].head(20))
 
