@@ -1,17 +1,17 @@
 import streamlit as st
 import pandas as pd
 import ast
+import sys
 
 st.set_page_config(layout="wide")
 st.title("TMDB Movies Dashboard")
 
-# Load data from GitHub raw CSV
-csv_url = "https://raw.githubusercontent.com/<your-username>/<your-repo>/main/tmdb_5000_movies.csv"
+# Load data from local CSV
 df = None
 try:
-    df = pd.read_csv(csv_url)
-except Exception:
-    st.error("CSV file not found. Please make sure the GitHub URL is correct.")
+    df = pd.read_csv("C:/Users/sakit/Desktop/Streamlit task/tmdb_5000_movies.csv")
+except FileNotFoundError:
+    st.error("CSV file not found. Please make sure 'tmdb_5000_movies.csv' is in the same folder as this script.")
 
 if df is not None:
 
@@ -60,4 +60,7 @@ if df is not None:
         rating_counts = filtered_df['vote_average'].value_counts().sort_index()
         rating_df = pd.DataFrame({'vote_average': rating_counts.index, 'count': rating_counts.values})
         st.bar_chart(rating_df.set_index('vote_average'))
-# ...existing code...
+from pathlib import Path
+
+garret_burhenn_pitches_csv = Path(__file__).parents[1] / 'C:/Users/sakit/Desktop/Streamlit task/tmdb_5000_movies.csv'
+st.write(sys.executable)
